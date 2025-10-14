@@ -3,6 +3,12 @@
     <head>
         <title>lana ginting</title>
         <link rel="stylesheet" href="styles.css">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#ffffff">
+    <!-- iOS support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="/images/icons/pp2.jpg">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Platypi:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
         </style>
@@ -41,7 +47,7 @@
                             <div class="scrollableAreaContainer">
                                 <ul class="scrollableItems">
                                     <li class="works-list-title"><b>UI/UX Design: Berantas Bersama</b></li>
-                                    <li class="works-list-text">On August 2025, I passed the selection process for my faculty’s Software Engineering Laboratory assistant. One of the assessment tasks was to create a prototype of the software I had designed. Berantas Bersama is an application aimed to eradicate fake news (hoax) on the internet. Collaborating with the Indonesian Ministry of Communication and Digital (Komdigi), this application is expected to foster a healthy digital democracy in Indonesia. The core features of Berantas Bersama are the search and report feature of fake news and digital forums.</li>
+                                    <li class="works-list-text">On August 2025, I passed the selection process for my faculty Software Engineering Laboratory assistant. One of the assessment tasks was to create a prototype of the software I had designed. Berantas Bersama is an application aimed to eradicate fake news (hoax) on the internet. Collaborating with the Indonesian Ministry of Communication and Digital (Komdigi), this application is expected to foster a healthy digital democracy in Indonesia. The core features of Berantas Bersama are the search and report feature of fake news and digital forums.</li>
                                     <li class="works-list-button">
                                         <a href="https://bit.ly/BerantasBersamaFlows"><button>View Prototype</button></a>
                                     </li>
@@ -112,6 +118,50 @@
                 </table>
             </div>
             <div class="footer-name">lana.</div>
-        </footer>
-    </body>
+                </footer>
+
+                <script>
+                        // Register the service worker to enable offline caching and PWA behaviors
+                        if ('serviceWorker' in navigator) {
+                            window.addEventListener('load', function() {
+                                navigator.serviceWorker.register('/sw.js')
+                                .then(function(reg) { console.log('Service Worker registered. Scope:', reg.scope); })
+                                .catch(function(err) { console.log('Service Worker registration failed:', err); });
+                            });
+                        }
+
+                        
+                </script>
+                        <!-- Install UI and handler for Chrome -->
+                        <script>
+                            let deferredPrompt;
+                            const installBtn = document.createElement('button');
+                            installBtn.id = 'installBtn';
+                            installBtn.textContent = 'Install Lana App';
+                            installBtn.style.position = 'fixed';
+                            installBtn.style.bottom = '16px';
+                            installBtn.style.left = '16px';
+                            installBtn.style.display = 'none';
+                            document.body.appendChild(installBtn);
+
+                            window.addEventListener('beforeinstallprompt', (e) => {
+                                // Prevent the mini-infobar from appearing on mobile
+                                e.preventDefault();
+                                deferredPrompt = e;
+                                // Show the install button
+                                installBtn.style.display = 'block';
+                            });
+
+                            installBtn.addEventListener('click', async () => {
+                                if (!deferredPrompt) return;
+                                deferredPrompt.prompt();
+                                const { outcome } = await deferredPrompt.userChoice;
+                                if (outcome === 'accepted') {
+                                    console.log('User accepted the A2HS prompt');
+                                }
+                                deferredPrompt = null;
+                                installBtn.style.display = 'none';
+                            });
+                        </script>
+        </body>
 </html>
